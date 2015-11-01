@@ -11,3 +11,9 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore .env file
+.env
+
+# ignore .idea from RubyMine
+.idea
