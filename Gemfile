@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Sass Bootstrap for Rails
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.3.5'  #converts Less to Sass, since Rails asset pipeline supports the Sass language by default
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
