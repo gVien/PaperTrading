@@ -121,3 +121,22 @@ footer {
   margin-top: 45px;
   @include box_sizing;
 }
+
+/* market summary */
+
+.summary-name {
+  padding-right: 15px;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+.up, .down {
+  padding-left: 5px;
+}
+
