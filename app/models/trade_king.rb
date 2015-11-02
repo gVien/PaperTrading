@@ -3,42 +3,49 @@ class TradeKing < ActiveRecord::Base
     def get_quote(sym)
       # available quote options at https://developers.tradeking.com/documentation/market-ext-quotes-get-post
       quote = get("/v1/market/ext/quotes.json", sym)
-      format(quote)
+      format_to_json(quote)
+    end
+
+    # get market capitalization
+    def market_cap(sym)
+      data = get_quote(sym)
+      # market cap = share outsanding times last price of quote
+      data[:sho].gsub(",","").to_i * data[:last].to_f
     end
 
     def get_toplosers
       toplosers = get('/v1/market/toplists/toplosers.json')
-      format(toplosers)
+      format_to_json(toplosers)
     end
 
     def get_top_pct_losers
       toppctlosers = get('/v1/market/toplists/toppctlosers.json')
-      format(toppctlosers)
+      format_to_json(toppctlosers)
     end
 
     def get_topvolume
       topvolume = get('/v1/market/toplists/topvolume.json')
-      format(topvolume)
+      format_to_json(topvolume)
     end
 
     def get_topactive
       topactive = get('/v1/market/toplists/topactive.json')
-      format(topactive)
+      format_to_json(topactive)
     end
 
     def get_topgainers
       topgainers = get('/v1/market/toplists/topgainers.json')
-      format(topgainers)
+      format_to_json(topgainers)
     end
 
     def get_top_pct_gainers
       toppctgainers = get('/v1/market/toplists/toppctgainers.json')
-      format(toppctgainers)
+      format_to_json(toppctgainers)
     end
 
     def get_top_active_gainers_by_dollar_value
       top_by_dollar = get('/v1/market/toplists/topactivegainersbydollarvalue.json')
-      format(top_by_dollar)
+      format_to_json(top_by_dollar)
     end
 
 
@@ -69,7 +76,7 @@ class TradeKing < ActiveRecord::Base
       end
     end
 
-    def format(data)
+    def format_to_json(data)
       JSON.parse(data, symbolize_names: true)[:response][:quotes][:quote]
     end
   end
