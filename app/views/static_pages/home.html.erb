@@ -1,11 +1,35 @@
 <% provide(:title, "Welcome") %>
-<h1>Learn to trade stocks with PaperTrading</h1>
-
-<p>THIS WILL BE A PLACE TO PUT ALL THE TRADING FEED INCLUDING POSTS</p>
 
 <%# TESTING TRADEKING API %>
 <p>
-  <% @test.each do |k,v| %>
-    <li><%="#{k}: #{v}"%></li>
+  <% @market_summary.each do |k| %>
+    <li><%="#{k}"%></li>
   <% end %>
 </p>
+
+<div class="row">
+  <h3 class="summary">Market Summary</h3>
+  <div class="col-md-6 summary-data">
+    <table>
+      <tbody>
+          <% @market_summary.each do |data| %>
+            <% if data[:chg_sign] == "d" %>
+             <tr>
+                <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
+                <td><%= data[:last] %></td>
+                <td class="down"><span class="glyphicon glyphicon-arrow-down"></span> <%= data[:chg_t] %></td>
+                <td class="down">(<%= data[:pchg] %>)</td>
+             </tr>
+            <% else %>
+             <tr>
+                <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
+                <td><%= data[:last] %></td>
+                <td class="up"><span class="glyphicon glyphicon-arrow-up"></span> <%= data[:chg_t] %></td>
+                <td class="up">(<%= data[:pchg] %>)</td>
+             </tr>
+            <% end #end if %>
+       <%end #end each%>
+      </tbody>
+    </table>
+  </div>
+</div>
