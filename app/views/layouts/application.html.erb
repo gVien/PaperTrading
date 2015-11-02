@@ -11,13 +11,15 @@
 </head>
 <body>
   <%= render "layouts/header" %>
-  <%# bootstrap supports these 4 flash classes: success, info, warning, and danger %>
-  <% flash.each do |message_type, message| %>
-    <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
-  <% end %>
-  <%= yield %>
-  <%= render "layouts/footer" %>
-  <%# for debugging %>
-  <%= debug(params) if Rails.env.development? %>
+  <div class="container">
+    <%# bootstrap supports these 4 flash classes: success, info, warning, and danger %>
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
+    <%= yield %>
+    <%= render "layouts/footer" %>
+    <%# for debugging %>
+    <%= debug(params) if Rails.env.development? %>
+  </div>
 </body>
 </html>
