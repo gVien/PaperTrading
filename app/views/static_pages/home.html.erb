@@ -1,10 +1,5 @@
 <% provide(:title, "Welcome") %>
 
-<%# TESTING AREA%>
-<p>
-<%= time_ago_in_words("2015-11-03T00:00:00-5:00") %>
-</p>
-
 <div class="row">
   <h3 class="summary">Market Summary</h3>
   <div class="col-md-6 summary-data">
@@ -30,9 +25,7 @@
       </tbody>
     </table>
   </div>
-</div>
 
-<div class="row">
   <h3 class="market-news-header">Market and Business News</h3>
   <div class="market-news">
     <% @ny_times.each_with_index do |news, i| %>
@@ -52,9 +45,7 @@
       </div>
     <% end %>
   </div>
-</div>
 
-<div class="row">
   <h3 class="trend">Market Trend</h3>
   <% @market_trend_pct.each do |header, data_arr| %>
   <div class="col-md-6 trend-data">

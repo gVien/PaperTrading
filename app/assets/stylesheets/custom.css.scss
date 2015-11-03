@@ -166,8 +166,15 @@ table {
   margin-bottom: 25px;
 }
 
+.summary-data, .market-news-header {
+  clear: both;
+}
+
+.summary-data {
+  margin-bottom: 15px;
+}
+
 .market-news {
-  margin-top: 15px;
   margin-bottom: 15px;
   padding-left: 15px;
   .news-section {
