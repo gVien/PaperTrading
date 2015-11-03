@@ -7,11 +7,11 @@ class TradeKing < ActiveRecord::Base
     end
 
     # get market capitalization
-    def market_cap(sym)
-      data = get_quote(sym)
-      # market cap = share outsanding times last price of quote
-      data[:sho].gsub(",","").to_i * data[:last].to_f
-    end
+    # def market_cap(sym)
+    #   data = get_quote(sym)
+    #   # market cap = share outsanding times last price of quote
+    #   data[:sho].gsub(",","").to_i * data[:last].to_f
+    # end
 
     def get_toplosers
       toplosers = get('/v1/market/toplists/toplosers.json')
