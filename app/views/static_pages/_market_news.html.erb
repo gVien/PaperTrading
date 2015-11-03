@@ -1,0 +1,16 @@
+<% @ny_times.each do |news| %>
+  <div class="news-section">
+    <span class="title">
+      <%= link_to news[:title], news[:url], target: "_blank" %>
+      <div class="byline">
+        <span class="src"><%= news[:byline].titleize %></span>
+        -
+        <span class="date"><%= time_ago_in_words(news[:published_date]) %> ago</span>
+      </div>
+      <div class="caption">
+        <%# CGI.unescapeHTML to decode and CGI.escapeHTML to encode (e.g. ' => &#8217;) %>
+        <%= CGI.unescapeHTML(news[:abstract]) %>
+      </div>
+    </span>
+  </div>
+<% end %>
