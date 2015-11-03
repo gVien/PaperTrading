@@ -34,6 +34,9 @@ gem "simple_oauth"
 # even machine for streaming
 gem "em-http-request"
 
+# let's party it up and consume APIs!!
+gem "httparty"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
