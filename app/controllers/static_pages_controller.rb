@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
-    @test = TradeKing.get_quote("BABA")
+    @market_summary = market_summary
+    @market_trend_pct = market_trend
   end
 
   def about
