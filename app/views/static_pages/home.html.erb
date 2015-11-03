@@ -33,6 +33,28 @@
 </div>
 
 <div class="row">
+  <h3 class="market-news-header">Market and Business News</h3>
+  <div class="market-news">
+    <% @ny_times.each_with_index do |news, i| %>
+      <div class="news-section">
+        <span class="title">
+          <%= link_to news[:title], news[:url], target: "_blank" %>
+          <div class="byline">
+            <span class="src"><%= news[:byline].titleize %></span>
+            -
+            <span class="date"><%= time_ago_in_words(news[:published_date]) %> ago</span>
+          </div>
+          <div class="caption">
+            <%# CGI.unescapeHTML to decode and CGI.escapeHTML to encode (e.g. ' => &#8217;) %>
+            <%= CGI.unescapeHTML(news[:abstract]) %>
+          </div>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
   <h3 class="trend">Market Trend</h3>
   <% @market_trend_pct.each do |header, data_arr| %>
   <div class="col-md-6 trend-data">

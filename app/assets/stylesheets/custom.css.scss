@@ -122,7 +122,7 @@ footer {
   @include box_sizing;
 }
 
-/* market summary/trend */
+/* market summary/trend/news */
 
 .summary-name {
   padding-right: 15px;
@@ -164,4 +164,16 @@ table {
 
 .trend-data {
   margin-bottom: 25px;
+}
+
+.market-news {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  .news-section {
+    margin-bottom: 10px;
+  }
+  .src {
+    color: #6F6F6F;
+  }
 }
