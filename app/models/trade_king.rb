@@ -1,4 +1,4 @@
-class TradeKing < ActiveRecord::Base
+class TradeKing
   class << self
     def get_quote(sym)
       # available quote options at https://developers.tradeking.com/documentation/market-ext-quotes-get-post
