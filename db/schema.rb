@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104215128) do
+ActiveRecord::Schema.define(version: 20151104221622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20151104215128) do
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at", using: :btree
   add_index "microposts", ["user_id"], name: "index_microposts_on_user_id", using: :btree
+
+  create_table "stocks", force: :cascade do |t|
+    t.string   "symbol"
+    t.string   "company_name"
+    t.integer  "watchlist_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "stocks", ["symbol"], name: "index_stocks_on_symbol", using: :btree
+  add_index "stocks", ["watchlist_id"], name: "index_stocks_on_watchlist_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -48,5 +59,6 @@ ActiveRecord::Schema.define(version: 20151104215128) do
   add_index "watchlists", ["user_id"], name: "index_watchlists_on_user_id", using: :btree
 
   add_foreign_key "microposts", "users"
+  add_foreign_key "stocks", "watchlists"
   add_foreign_key "watchlists", "users"
 end
