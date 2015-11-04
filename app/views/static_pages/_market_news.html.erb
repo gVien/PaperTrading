@@ -5,7 +5,7 @@
       <div class="byline">
         <span class="src"><%= news[:byline].titleize %></span>
         -
-        <span class="date"><%= time_ago_in_words(news[:published_date]) %> ago</span>
+        <span class="date"><%= time_ago_in_words(news[:created_date]) %> ago</span>
       </div>
       <div class="caption">
         <%# CGI.unescapeHTML to decode and CGI.escapeHTML to encode (e.g. ' => &#8217;) %>
