@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # make email to be down case and uniform before saving in database
   before_save { self.email = email.downcase}
+  has_many :microposts
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
