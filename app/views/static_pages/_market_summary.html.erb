@@ -1,0 +1,21 @@
+<table>
+  <tbody>
+      <% @market_summary.each do |data| %>
+        <% if data[:chg_sign] == "d" %>
+         <tr>
+            <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
+            <td><%= data[:last] %></td>
+            <td class="down"><span class="glyphicon glyphicon-arrow-down"></span> <%= data[:chg_t] %></td>
+            <td class="down">(<%= data[:pchg] %>)</td>
+         </tr>
+        <% else %>
+         <tr>
+            <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
+            <td><%= data[:last] %></td>
+            <td class="up"><span class="glyphicon glyphicon-arrow-up"></span> <%= data[:chg_t] %></td>
+            <td class="up">(<%= data[:pchg] %>)</td>
+         </tr>
+        <% end #end if %>
+   <%end #end each%>
+  </tbody>
+</table>

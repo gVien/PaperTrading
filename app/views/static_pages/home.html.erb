@@ -1,74 +1,18 @@
 <% provide(:title, "Welcome") %>
 
-<%# TESTING AREA%>
-<p>
-<%= time_ago_in_words("2015-11-03T00:00:00-5:00") %>
-</p>
-
 <div class="row">
   <h3 class="summary">Market Summary</h3>
   <div class="col-md-6 summary-data">
-    <table>
-      <tbody>
-          <% @market_summary.each do |data| %>
-            <% if data[:chg_sign] == "d" %>
-             <tr>
-                <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
-                <td><%= data[:last] %></td>
-                <td class="down"><span class="glyphicon glyphicon-arrow-down"></span> <%= data[:chg_t] %></td>
-                <td class="down">(<%= data[:pchg] %>)</td>
-             </tr>
-            <% else %>
-             <tr>
-                <td class="summary-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
-                <td><%= data[:last] %></td>
-                <td class="up"><span class="glyphicon glyphicon-arrow-up"></span> <%= data[:chg_t] %></td>
-                <td class="up">(<%= data[:pchg] %>)</td>
-             </tr>
-            <% end #end if %>
-       <%end #end each%>
-      </tbody>
-    </table>
+    <%= render "market_summary" %>
   </div>
-</div>
 
-<div class="row">
-  <h3 class="trend">Market Trend</h3>
-  <% @market_trend_pct.each do |header, data_arr| %>
-  <div class="col-md-6 trend-data">
-    <h5 class="trend-header"><%= header  %></h5>
-    <table>
-      <thead class="tbl-header">
-          <tr>
-              <th class="trend-name">Leaders</th>
-              <th class="dol">$</th>
-              <th class="dol-chg">$ Chg</th>
-              <th>% Chg</th>
-              <th class="volume">Volume</th>
-           </tr>
-        </thead>
-      <tbody>
-          <% data_arr.each do |data| %>
-            <% if data[:chg_sign] == "d" %>
-             <tr>
-                <td class="trend-name"><%= data[:name].titleize %> (<%= link_to data[:symbol], "#"  %>)</td>
-                <td class="dol"><%= data[:last].to_f.round(3) %></td>
-                <td class="down dol-chg"><span class="glyphicon glyphicon-arrow-down"></span> <%= data[:chg].to_f.round(3) %></td>
-                <td class="down"><%= data[:pchg].to_f.round(2) %>%</td>
-                <td class="volume"><%= format_number(data[:vl]) %></td>
-             </tr>
-            <% else %>
-             <tr>
-                <td class="trend-name"><%= data[:name].titleize %> (<%= link_to data[:symbol], "#"  %>)</td>
-                <td class="dol"><%= data[:last].to_f.round(3) %></td>
-                <td class="up dol-chg"><span class="glyphicon glyphicon-arrow-up"></span> <%= data[:chg].to_f.round(3) %></td>
-                <td class="up"><%= data[:pchg].to_f.round(2) %>%</td>
-                <td class="volume"><%= format_number(data[:vl]) %></td>
-             </tr>
-            <% end #end if %>
-          <% end #end inner each %>
-      </tbody>
-    </table>
+  <h3 class="market-news-header">Market and Business News</h3>
+  <div class="market-news">
+    <%= render "market_news" %>
   </div>
+
+  <h3 class="trend">Market Trend</h3>
+  <% @market_trend.each do |header, data_arr| %>
+    <%= render "market_trend", { header: header, data_arr: data_arr } %>
   <%end #end outer each%>
 </div>
