@@ -54,9 +54,13 @@ ActiveRecord::Schema.define(version: 20151105200456) do
     t.string   "symbol_traded"
     t.integer  "shares_traded"
     t.decimal  "total_amount_traded"
+    t.integer  "user_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
   end
+
+  add_index "trades", ["symbol_traded"], name: "index_trades_on_symbol_traded", using: :btree
+  add_index "trades", ["user_id"], name: "index_trades_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -82,5 +86,6 @@ ActiveRecord::Schema.define(version: 20151105200456) do
   add_foreign_key "microposts", "users"
   add_foreign_key "portfolios", "users"
   add_foreign_key "stocks", "watchlists"
+  add_foreign_key "trades", "users"
   add_foreign_key "watchlists", "users"
 end
