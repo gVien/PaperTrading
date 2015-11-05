@@ -9,5 +9,6 @@ class CreateTrades < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :trades, :symbol_traded
   end
 end
