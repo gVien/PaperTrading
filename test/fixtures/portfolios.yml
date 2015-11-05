@@ -1,0 +1,6 @@
+goog:
+  symbol: "GOOG"
+  company_name: "Alphabet Inc"
+  quantity: 100
+  average_price: 700.00
+  user: gai
