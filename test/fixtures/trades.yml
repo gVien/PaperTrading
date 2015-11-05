@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  symbol_traded: MyString
+  shares_traded: 1
+  total_amount_traded: MyString
+
+two:
+  symbol_traded: MyString
+  shares_traded: 1
+  total_amount_traded: MyString
