@@ -122,6 +122,9 @@ footer {
   @include box_sizing;
 }
 
+sup {
+  color: $light-gray;
+}
 /* market summary/trend/news */
 
 .summary-name {
