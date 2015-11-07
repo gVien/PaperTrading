@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
   end
 
   def new
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "You have successfully logged in"
+      redirect_to @user
     else
       render "new"
     end
