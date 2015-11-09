@@ -1,12 +1,13 @@
 <%# using getBootstrap.com %>
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "PaperTrading", root_path, id: "logo" %>
+    <%# link_to "PaperTrading", root_path, id: "logo" %>
+    <a href="/" id="logo">PaperTrading<sup>BETA</sup></a>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "Log in", "#" %></li>
-        <li><%= link_to "Sign Up", "#" %></li>
+        <li><%= link_to "Log in", login_path %></li>
+        <li><%= link_to "Sign Up", signup_path %></li>
       </ul>
     </nav>
   </div>
