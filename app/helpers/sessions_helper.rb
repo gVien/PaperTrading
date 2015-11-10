@@ -45,4 +45,11 @@ module SessionsHelper
     # (which is not in the case now. this is for completeness and security reason)
     @curret_user = nil
   end
+
+  # method to forget the current user
+  def forget(user)
+    user.forget # `forget` from user model
+    cookies.delete(:user_id)          # equally valid cookies[:user_id] = nil
+    cookies.delete(:remember_token)   # equally valid cookies[:remember_token] = nil
+  end
 end
