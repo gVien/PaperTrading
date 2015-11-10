@@ -36,6 +36,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   # get signup path
   # verify user count is increased by 1 after making a post request w/ valid user sign up info
   # verify users/show template is render
+  # verify the user is logged in after a successful sign up
   # verify success flash message is displayed that user successfully signup (e.g flash hash is empty)
   test "valid signup info" do
     get signup_path
@@ -50,6 +51,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         password_confirmation: "123456"}
     end
     assert_template "users/show"
+    assert logged_in?
     assert_not(flash.empty?)  # pass if flash is empty (false) since we have success flash, otherwise fail (true)
   end
 end
