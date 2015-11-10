@@ -51,7 +51,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         password_confirmation: "123456"}
     end
     assert_template "users/show"
-    assert logged_in?
+    assert user_logged_in?
     assert_not(flash.empty?)  # pass if flash is empty (false) since we have success flash, otherwise fail (true)
   end
 end
