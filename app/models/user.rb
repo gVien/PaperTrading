@@ -34,4 +34,16 @@ class User < ActiveRecord::Base
     self.remember_token = User.new_token  # similar to `password` virtual attribute used in has_secure_password
     update_attribute(:remember_digest, User.digest(remember_token))
   end
+
+  # returns true if the given token (e.g. remember_token) matches the digest
+  # this is similar to authenticate method from BCrypt, which compares password and password_digest
+  def authenticated?(remember_token)
+    # remember_token is not the same as the accessor (this is a reference, in case there is a confusion in the future)
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)  # note this is the same as BCrypt::Password.new(remember_digest) == remember_token but it is clearer
+  end
+
+  # method to forget a user
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
 end
