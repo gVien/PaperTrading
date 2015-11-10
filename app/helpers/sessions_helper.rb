@@ -5,10 +5,30 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
-  # method to return current user that is in session (if any)
+  # method to remember a user in persistence session
+  def remember(user)
+    user.remember
+    # cookies[:remember_token] = { value: some_token, expires: 20.years.from_now.utc }
+    # which is the same as cookies.permanent[:remember_token] = remember_token
+    # signed encrypts the cookie before placing it in the browser
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token  # saving the remember_token to cookie
+  end
+
+  # method to return the user corresponding to the remember token in cookie
   def current_user
-    # find method raises an error if session[:user_id] is nil
-    @current_user ||= User.find_by(id: session[:user_id])
+    # modified current_user to incorporate remember_me feature
+    # 1. if session[:user_id] exists, assign to @current_user
+    if (user_id = session[:user_id])
+      @current_user ||= User.find_by(id: user_id)
+    elsif (user_id = cookies.signed[:user_id]) # 2. if not above, look for the cookies[:user_id] from the browser
+      # find the user_id stored in the cookies in the database
+      user = User.find_by(id: user_id)
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in(user)
+        @current_user = current
+      end
+    end
   end
 
   # returns true if the user is logged in, false otherwise
