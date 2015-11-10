@@ -8,6 +8,12 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
   include ApplicationHelper
-  include SessionsHelper
+
   # Add more helper methods to be used by all tests here...
+
+  # including the SessionsHelper gives some weird errors. The `logged_in?` does not work when using after `delete logout_path` request
+  # this helper method works the same way as `logged_in?` in session helper but will be used in test
+  def user_logged_in?
+    !session[:user_id].nil?
+  end
 end
