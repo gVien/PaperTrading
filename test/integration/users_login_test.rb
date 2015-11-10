@@ -26,6 +26,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # login w/ valid info process
   # 1. visit login path
   # 2. post to the session path with valid email + password
+  # 2.5. verify the user is logged in
   # 3. verify after login, it redirects to the user path (.../users/1)
   # 4. verify the sign up link disappears
   # 5. verify the login link disappears
@@ -33,9 +34,19 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # 7. verify the profile link appears
   # 8. verify the setting link appears (not active yet)
   # 9. verify the logout link appears
-  test "login with valid information" do
+  # add logout after login
+  # 10. make a delete request to the log out path
+  # 11. verify the user is NOT logged_in?
+  # 12. verify the page is redirected to the root page
+  # 13. verify the sign up link appears
+  # 14. verify the login link appears
+  # 15. verify the home link appears on the paper trading logo
+  # 16. verify the logout link disappearts
+  # 17. verify the profile link disappears
+  test "login with valid information and then logout" do
     get login_path  #1
     post login_path, session: { email: @gai.email, password: "123456"}  #2
+    assert user_logged_in? # 2.5
     assert_redirected_to @gai #3
     follow_redirect!  # visit target page
     assert_template "users/show"
@@ -45,5 +56,16 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(@gai)   #7
     # assert_select "a[href=?]", edit_user_path(@gai)   #8
     assert_select "a[href=?]", logout_path   #9
+
+    # add logout test after login
+    delete logout_path  #10
+    assert_not user_logged_in? # 11, user_logged_in? returns false to pass
+    assert_redirected_to root_url  # 12
+    follow_redirect! # visit the target (root) page
+    assert_select "a[href=?]", signup_path, count: 1      #13
+    assert_select "a[href=?]", login_path, count: 1       #14
+    assert_select "a[href=?]", root_path, count: 1        #15
+    assert_select "a[href=?]", logout_path, count: 0      #16
+    assert_select "a[href=?]", user_path(@gai), count: 0   #17
   end
 end
