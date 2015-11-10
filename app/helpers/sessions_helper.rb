@@ -40,6 +40,7 @@ module SessionsHelper
 
   # method to log out the current user
   def log_out
+    forget(current_user)
     session.delete(:user_id)  #this also works session[:user_id] = nil
     # this is needed if @current_user is created before the destroy action
     # (which is not in the case now. this is for completeness and security reason)
