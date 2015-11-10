@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessor :remember_token
   # make email to be down case and uniform before saving in database
   before_save { self.email = email.downcase}
   has_many :microposts
@@ -20,5 +21,17 @@ class User < ActiveRecord::Base
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     # string is the string that needs to be hash and cost is the computational cost to calculate the hash. The higher the cost, it will be harder to determine the original password
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  # returns a random base 64 token (random combination of A–Z, a–z, 0–9, “-”, and “_”)
+  def self.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # this method remembers a user in the database for use in persistent sessions (cookie)
+  def remember
+    # self refers to instance of User class since `remember` is not a class method
+    self.remember_token = User.new_token  # similar to `password` virtual attribute used in has_secure_password
+    update_attribute(:remember_digest, User.digest(remember_token))
   end
 end
