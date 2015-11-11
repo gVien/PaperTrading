@@ -188,8 +188,6 @@ table {
   }
 }
 
-/* form */
-
 /* forms */
 
 #error_explanation {
@@ -216,4 +214,18 @@ input, textarea, select, .uneditable-input {
 
 input {
   height: auto !important;
+}
+
+.checkbox {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  span {
+    margin-left: 15px;
+    font-weight: normal;
+  }
+}
+
+#session_remember_me {
+  width: auto;
+  margin-left: 0;
 }
