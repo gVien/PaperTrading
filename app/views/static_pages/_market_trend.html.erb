@@ -14,7 +14,7 @@
           <% data_arr.each do |data| %>
             <% if data[:chg_sign] == "d" %>
              <tr>
-                <td class="trend-name"><%= data[:name].titleize %> (<%= link_to data[:symbol], "#"  %>)</td>
+                <td class="trend-name"><%= data[:name] %> (<%= link_to data[:symbol], "#"  %>)</td>
                 <td class="dol"><%= data[:last].to_f.round(3) %></td>
                 <td class="down dol-chg"><span class="glyphicon glyphicon-arrow-down"></span> <%= data[:chg].to_f.round(3) %></td>
                 <td class="down"><%= data[:pchg].to_f.round(2) %>%</td>
@@ -22,7 +22,7 @@
              </tr>
             <% else %>
              <tr>
-                <td class="trend-name"><%= data[:name].titleize %> (<%= link_to data[:symbol], "#"  %>)</td>
+                <td class="trend-name"><%= data[:name]%> (<%= link_to data[:symbol], "#"  %>)</td>
                 <td class="dol"><%= data[:last].to_f.round(3) %></td>
                 <td class="up dol-chg"><span class="glyphicon glyphicon-arrow-up"></span> <%= data[:chg].to_f.round(3) %></td>
                 <td class="up"><%= data[:pchg].to_f.round(2) %>%</td>
