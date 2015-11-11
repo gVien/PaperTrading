@@ -20,6 +20,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                    email: "invalidemail@",
                                    password: "123",
                                    password_confirmation: "456" }
-    assert_tempate("users/edit")
+    assert_template("users/edit")
   end
 end
