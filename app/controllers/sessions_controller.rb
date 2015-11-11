@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
 
     if @user && @user.authenticate(params[:session][:password])
       log_in(@user)
+      params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
       redirect_to @user
     else
       # create an error message and render log in page
@@ -19,5 +20,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    # add condition to prevent an error when a user logs out in 1 tab, and tries to do it again /w another tab
+    # (browser that supports multiple tabs)
+    log_out if logged_in?
+    redirect_to root_path
   end
 end
