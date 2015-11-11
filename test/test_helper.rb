@@ -24,7 +24,7 @@ class ActiveSupport::TestCase
     remember_me = options.fetch(:remember_me, "1")
     if integration_test?   # integration test only
       post login_path, session: { email: user.email,
-                                  password: user.password,
+                                  password: password,
                                   remember_me: remember_me}
     else  # all other test
       session[:user_id] = user.id
