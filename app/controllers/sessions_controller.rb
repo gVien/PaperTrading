@@ -19,7 +19,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    # add condition to prevent an error when a user logs out in 1 tab, and tries to do it again /w another tab
+    # (browser that supports multiple tabs)
+    log_out if logged_in?
     redirect_to root_path
   end
 end

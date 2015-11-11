@@ -38,6 +38,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   # 10. make a delete request to the log out path
   # 11. verify the user is NOT logged_in?
   # 12. verify the page is redirected to the root page
+  # 12.5 delete request to log out path again (prevent multiple tabs error. Only logout if only user is logged in)
   # 13. verify the sign up link appears
   # 14. verify the login link appears
   # 15. verify the home link appears on the paper trading logo
@@ -61,6 +62,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     delete logout_path  #10
     assert_not user_logged_in? # 11, user_logged_in? returns false to pass
     assert_redirected_to root_url  # 12
+    # 12.5 simulate a browser w/ multiple tabs, one tab is logged out, the second tab attempts to log out
+    # should not give us an error
+    delete logout_path  #12.5
     follow_redirect! # visit the target (root) page
     assert_select "a[href=?]", signup_path, count: 1      #13
     assert_select "a[href=?]", login_path, count: 1       #14
