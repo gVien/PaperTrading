@@ -39,6 +39,9 @@ class User < ActiveRecord::Base
   # this is similar to authenticate method from BCrypt, which compares password and password_digest
   def authenticated?(remember_token)
     # remember_token is not the same as the accessor (this is a reference, in case there is a confusion in the future)
+
+    # multiple browsers, prevents an error when a second browser attempts to log out when the other browser already did
+    return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)  # note this is the same as BCrypt::Password.new(remember_digest) == remember_token but it is clearer
   end
 
