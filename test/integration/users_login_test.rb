@@ -72,4 +72,22 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", logout_path, count: 0      #16
     assert_select "a[href=?]", user_path(@gai), count: 0   #17
   end
+
+  # testing remember me feature flow
+  # 1. log in user
+  # 2. verify the remember_digest matches the remember_token
+  # (since a remember_digest is created if the user login w/ the remember me box is checked)
+  test "remember me feature when remember me box is checked" do
+    log_in_as(@gai, { remember_me: "1" })
+    #assigns method allows us to access the instance variable @user and its virtual attribute (e.g. remember_token)
+    assert_equal(cookies["remember_digest"], assigns(:user).remember_token) # or assert_not(cookies["remember_digest"], nil) if we are not concerned with the match of the remember_token
+  end
+
+  # testing remember me feature flow
+  # log in user
+  # verify the remember_digest is nil
+  test "remember me feature when remember me box is unchecked" do
+    log_in_as(@gai, remember_me: "0")
+    assert_equal(cookies["remember_digest"], nil) # assert_nil also works!
+  end
 end
