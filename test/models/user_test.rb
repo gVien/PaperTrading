@@ -89,4 +89,11 @@ class UserTest < ActiveSupport::TestCase
     @user.password = @user.password_confirmation = "a" * 5
     assert_not(@user.valid?, "password must be at least 6 characters long")
   end
+
+  # test replicates a scenario when a user uses two browsers to login to the site
+  # when user logs out from one browser but not the others, which will create an error
+  # since the remember_digest is nil in the database
+  test "authenticated? should return false if remember_token is nil" do
+    assert_not(@user.authenticated?("")) #expect authenticated?("") to return false to pass
+  end
 end
