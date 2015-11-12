@@ -73,4 +73,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
+  test "non-admin user cannot change the his or her admin attribute from false to true via the web" do
+    log_in_as(@new_user)
+    assert_not(@new_user.admin?)  # false to pass
+    patch :update, id: @new_user, user: { admin: true }
+    assert_not(@new_user.reload.admin?) # should be false again to pass
+  end
 end
