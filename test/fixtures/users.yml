@@ -3,6 +3,7 @@ gai:
   last_name: Example
   email: g@gai.com
   password_digest: <%= User.digest("123456") %>
+  admin: true
 
 second_user:
   first_name: Test
