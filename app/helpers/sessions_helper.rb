@@ -15,6 +15,11 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token  # saving the remember_token to cookie
   end
 
+  # method to return true if user is the current_user, false otherwise
+  def current_user?(user)
+    user == current_user
+  end
+
   # method to return the user corresponding to the remember token in cookie
   def current_user
     # modified current_user to incorporate remember_me feature
