@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # verify a user is logged_in before these actions can be done
+  before_action :logged_in_user, only: [:edit, :update]
+
   def index
   end
 
@@ -38,5 +41,14 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    end
+
+    # before filter (#before_action)
+
+    def logged_in_user
+      unless logged_in? #if user is not logged in
+        flash[:danger] = "The action you requested is not valid. You may want to login."
+        redirect_to login_url
+      end
     end
 end
