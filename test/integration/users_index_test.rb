@@ -28,4 +28,13 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
       delete user_path(@non_admin_user)
     end
   end
+
+  # 1. log in as non admin
+  # 2. get the users path
+  # 3. verify the non-admin user cannot see the delete anchor link
+  test "non-admin user should not see delete links next to users name" do
+    log_in_as(@non_admin_user)
+    get users_path
+    assert_select "a", text: "delete", count: 0
+  end
 end
