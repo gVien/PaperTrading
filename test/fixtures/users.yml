@@ -4,3 +4,9 @@ gai:
   email: g@gai.com
   password_digest: <%= User.digest("123456") %>
 
+second_user:
+  first_name: Test
+  last_name: User
+  email: test@test.com
+  password_digest: <%= User.digest("123456") %>
+
