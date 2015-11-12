@@ -58,4 +58,16 @@ module SessionsHelper
     cookies.delete(:user_id)          # equally valid cookies[:user_id] = nil
     cookies.delete(:remember_token)   # equally valid cookies[:remember_token] = nil
   end
+
+  # redirect to store location (or the default) after the non-login user is logged in
+  def redirect_back_to_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # stores the URL the non-login user is trying to access, before logging in
+  def store_location
+    # request.url is used to get the requested url
+    session[:forwarding_url] = request.url if request.get?
+  end
 end
