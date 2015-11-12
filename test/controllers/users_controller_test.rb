@@ -20,10 +20,29 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
-  # user must be logged in to update the user profile, otherwise redirect to home page (or other page)
+  # user must be logged in to update the user profile, otherwise redirect to login page
   test "should redirect login page when attempting to update if not logged in" do
     patch :update, id: @gai, user: { first_name: @gai.first_name, last_name: @gai.last_name }
     assert_not(flash.empty?)  #pass if false
     assert_redirected_to login_url
+  end
+
+  # a user logged in cannot edit/update another's user profile page, and should redirect to root page
+  # 1. log in as @gai
+  # 2. attempt to edit/update @new_user setting
+  # 3. verify no flash is displayed
+  # 4. verify a redirect to the root url
+  test "should redirect edit when logged in as wrong user" do
+    log_in_as(@gai)
+    get :edit, id: @new_user #access the edit link of a user
+    assert_not(flash.empty?)  #pass if false
+    assert_redirected_to root_url
+  end
+
+  test "should redirect update when logged in as wrong user" do
+    log_in_as(@gai)
+    patch :update, id: @new_user, user: { first_name: @new_user.first_name, last_name: @new_user.last_name }
+    assert_not(flash.empty?)  #pass if false
+    assert_redirected_to root_url
   end
 end
