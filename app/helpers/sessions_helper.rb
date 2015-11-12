@@ -15,6 +15,11 @@ module SessionsHelper
     cookies.permanent[:remember_token] = user.remember_token  # saving the remember_token to cookie
   end
 
+  # method to return true if user is the current_user, false otherwise
+  def current_user?(user)
+    user == current_user
+  end
+
   # method to return the user corresponding to the remember token in cookie
   def current_user
     # modified current_user to incorporate remember_me feature
@@ -52,5 +57,17 @@ module SessionsHelper
     user.forget # `forget` from user model
     cookies.delete(:user_id)          # equally valid cookies[:user_id] = nil
     cookies.delete(:remember_token)   # equally valid cookies[:remember_token] = nil
+  end
+
+  # redirect to store location (or the default) after the non-login user is logged in
+  def redirect_back_to_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  # stores the URL the non-login user is trying to access, before logging in
+  def store_location
+    # request.url is used to get the requested url
+    session[:forwarding_url] = request.url if request.get?
   end
 end

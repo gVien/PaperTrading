@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:session][:password])
       log_in(@user)
       params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
-      redirect_to @user
+      redirect_back_to_or @user
     else
       # create an error message and render log in page
       # flash does not work like the one in the user controller since the render method does not count as a request
