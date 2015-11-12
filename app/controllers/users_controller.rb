@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   # verify a user is logged_in before these actions can be done
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update]
 
   # verify a logged in user is the correct user
   before_action :correct_user, only: [:edit, :update]
 
   def index
+    @users = User.all
   end
 
   def show
