@@ -41,6 +41,9 @@ gem "httparty"
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+# gem to populate fake data
+gem "faker", "1.4.3"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
