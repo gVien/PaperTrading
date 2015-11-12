@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
   # verify a user is logged_in before these actions can be done
-  before_action :logged_in_user, only: [:index, :edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
 
   # verify a logged in user is the correct user
   before_action :correct_user, only: [:edit, :update]
+
+  # verify the user is admin before destroy action can be done
+  before_action :admin_user, only: :destroy
 
   def index
     @users = User.paginate(:page => params[:page])
@@ -42,6 +45,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+  end
+
   private
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
@@ -64,5 +72,11 @@ class UsersController < ApplicationController
     def correct_user
       user = User.find(params[:id])
       redirect_to root_url unless current_user?(user)
+    end
+
+    # check if the user is an admin, otherwise redirect to root
+    # ensure that only the admin user is allowed to delete the user
+    def admin_user
+      redirect_to root_url unless current_user.admin?   # if not admin
     end
 end
