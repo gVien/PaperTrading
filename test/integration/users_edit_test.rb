@@ -29,7 +29,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   # 3. make a patch request to update user with correct info
   # 4. verify there are no error flash messages
   # 5. verify the user is redirected to the profile page
-  # 6. reload the page
+  # 6. reload the the user's info in the database
   # 7. verify the user's full name and email in the database w/ the new ones
   test "edit user successfully" do
     log_in_as(@gai)
@@ -44,7 +44,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                    password_confirmation: "qwerty" }
     assert_not(flash.empty?)
     assert_redirected_to user_path(@gai)
-    @gai.reload
+    @gai.reload # reload the user's info after the update
     assert_equal(full_name(@gai), "#{new_first_name} #{new_last_name}")
     assert_equal(@gai.email, new_email)
   end
