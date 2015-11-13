@@ -1,3 +1,11 @@
-UserMailer#account_activation
+Hi <%= @user.name.capitalize %>!
 
-<%= @greeting %>, find me in app/views/user_mailer/account_activation.text.erb
+Welcome to PaperTrading!
+
+Thank you for registering on our website. Before we can proceed, please activate your PaperTrading account by visiting the link below:
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
+
+Happy Paper Trading!
+
+- The PaperTrading Team
