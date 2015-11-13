@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token
   # make email to be down case and uniform before saving in database
-  before_save { self.email = email.downcase}
+  before_save :downcase_email
+  before_create :create_activation_digest # generate a digest for the user before a user is created
   has_many :microposts
   has_many :watchlists
   has_many :portfolios
@@ -51,4 +52,18 @@ class User < ActiveRecord::Base
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  private
+
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    # this creates the activation token and digest for account activation
+    # a newly signed up user will have activation token and digest assigned to each user object
+    def create_activation_digest
+      # note self refers to the instance of User class while User refers to the class method
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end
