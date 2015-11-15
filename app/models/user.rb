@@ -40,12 +40,24 @@ class User < ActiveRecord::Base
 
   # returns true if the given token (e.g. remember_token) matches the digest
   # this is similar to authenticate method from BCrypt, which compares password and password_digest
-  def authenticated?(remember_token)
-    # remember_token is not the same as the accessor (this is a reference, in case there is a confusion in the future)
+  def authenticated?(digest, token)
+    # send method: lets us call a method with a name of our choice by “sending a message” to a given object
+    # example below gives us an activation_digest from the database:
+    # user = User.first
+    # user.activation_digest => "$2a$10$ZYalH8a6JFgAPwM52uksUeYsExAOLHv/cfPvICoEia6/R9DDrKEEm"
+    # user.send(:activation_digest) or user.send("activation_digest") => "$2a$10$ZYalH8a6JFgAPwM52uksUeYsExAOLHv/cfPvICoEia6/R9DDrKEEm"
 
-    # multiple browsers, prevents an error when a second browser attempts to log out when the other browser already did
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)  # note this is the same as BCrypt::Password.new(remember_digest) == remember_token but it is clearer
+    # Digest is the (Bcrypted hash) digest
+    # use these parameters in symbol: remember_digest, activation_digest, password_digest, etc.
+    digest = send("#{digest}")
+
+    # for remember_digest which is created after the user is created
+    # for multiple browsers with this app opened, prevents an error when a second browser attempts
+    # to log out when the other browser already did
+    return false if digest.nil?
+
+    # this is the same as BCrypt::Password.new(digest) == token but cleaner
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # method to forget a user
