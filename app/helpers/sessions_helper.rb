@@ -29,7 +29,7 @@ module SessionsHelper
     elsif (user_id = cookies.signed[:user_id]) # 2. if not above, look for the cookies[:user_id] from the browser
       # find the user_id stored in the cookies in the database
       user = User.find_by(id: user_id)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember_digest, cookies[:remember_token])
         log_in(user)
         @current_user = user
       end

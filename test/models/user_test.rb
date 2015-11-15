@@ -94,6 +94,6 @@ class UserTest < ActiveSupport::TestCase
   # when user logs out from one browser but not the others, which will create an error
   # since the remember_digest is nil in the database
   test "authenticated? should return false if remember_token is nil" do
-    assert_not(@user.authenticated?("")) #expect authenticated?("") to return false to pass
+    assert_not(@user.authenticated?(:remember_digest, "")) #expect authenticated?(:remember_digest, "") to return false to pass
   end
 end
