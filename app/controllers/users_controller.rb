@@ -24,8 +24,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      UserMailer.account_activation(@user).deliver_now
-      @user.update_attribute(:activation_email_sent_at, Time.zone.now)
+      @user.send_activation_email
       flash[:success] = "You have successfully signed up! You are temporarily logged in. An activation email has been sent to your email. Please activate your account to prevent any disruption."
       redirect_to @user
     else

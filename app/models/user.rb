@@ -71,6 +71,18 @@ class User < ActiveRecord::Base
     !(self.activation_email_sent_at < 60.minutes.ago)
   end
 
+  # send activation link via email after sign up and update email sent time
+  def send_activation_email
+    # self is the user object
+    UserMailer.account_activation(self).deliver_now
+    self.update_attribute(:activation_email_sent_at, Time.zone.now)
+  end
+
+  # activates the account
+  def activate_account
+    self.update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
   private
 
     def downcase_email
