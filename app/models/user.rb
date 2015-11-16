@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token, :activation_token
+  attr_accessor :remember_token, :activation_token, :reset_token
   # make email to be down case and uniform before saving in database
   before_save :downcase_email
   before_create :create_activation_digest # generate a digest for the user before a user is created
