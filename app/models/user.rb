@@ -97,6 +97,11 @@ class User < ActiveRecord::Base
     self.update_attribute(:reset_sent_at, Time.zone.now)
   end
 
+  # returns true if password reset link is expired, false otherwise
+  def password_reset_expired?
+    self.reset_sent_at < 60.minutes.ago
+  end
+
   private
 
     def downcase_email
