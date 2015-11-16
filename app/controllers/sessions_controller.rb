@@ -6,9 +6,18 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email].downcase)  #session from new.html.erb
 
     if @user && @user.authenticate(params[:session][:password])
-      log_in(@user)
-      params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
-      redirect_back_to_or @user
+      if @user.activated?
+        log_in(@user)
+        params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
+        redirect_back_to_or @user
+      elsif @user.activation_email_sent_at_not_expired?
+        log_in(@user)
+        params[:session][:remember_me] == "1" ? remember(@user) : forget(@user)
+        redirect_back_to_or @user
+      else
+        flash[:warning] = "Account not activated. Check your email for the activation link."
+        redirect_to root_url
+      end
     else
       # create an error message and render log in page
       # flash does not work like the one in the user controller since the render method does not count as a request

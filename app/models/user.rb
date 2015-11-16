@@ -65,6 +65,12 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, nil)
   end
 
+  # returns true if the activation_email_sent_at time is within the expiration limit
+  # use will be temporily logged in within the expiration limit after sign up
+  def activation_email_sent_at_not_expired?
+    !(self.activation_email_sent_at < 60.minutes.ago)
+  end
+
   private
 
     def downcase_email
