@@ -83,6 +83,20 @@ class User < ActiveRecord::Base
     self.update_columns(activated: true, activated_at: Time.zone.now)
   end
 
+  # *** Password Reset ***
+  # create reset digest for password reset
+  def create_reset_digest
+    # similar to create_activation_digest
+    self.reset_token = User.new_token
+    self.reset_digest = User.digest(reset_token)
+  end
+
+  # send user password reset email
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+    self.update_attribute(:reset_sent_at, Time.zone.now)
+  end
+
   private
 
     def downcase_email
