@@ -31,3 +31,8 @@ User.create!({ first_name: "Gai",
                  activation_email_sent_at: 1.hour.ago })
 end
 
+users = User.order(:created_at).take(10)
+50.times do
+  content = Faker::Lorem.sentence(10)
+  users.each { |user| user.posts.create!(content: content) }
+end
