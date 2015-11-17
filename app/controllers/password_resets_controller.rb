@@ -57,7 +57,7 @@ class PasswordResetsController < ApplicationController
     def valid_user
        # /password_resets/:id/edit?email=encoded_email
        # /password_resets/0enrhAa0CyycHEUxJvCAiA/edit?email=example%40example.com
-      unless @user.activated? && @user && @user.authenticated?(:reset_digest, params[:id])
+      unless @user && @user.activated? && @user.authenticated?(:reset_digest, params[:id])  # reorder for password reset integration test
         flash[:danger] = "Password reset is invalid."
         redirect_to root_url
       end
