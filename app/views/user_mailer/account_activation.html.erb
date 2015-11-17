@@ -1,0 +1,17 @@
+<p>Hi <%= @user.first_name.capitalize %>!</p>
+
+<h3>Welcome to PaperTrading!</h3>
+
+<p>Thank you for registering on our website. Before we can proceed, please activate your PaperTrading account by clicking the link below:</p>
+
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token, email: @user.email) %>
+
+<p>or if you wish, you may copy and paste the link below into your browser</p>
+
+<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
+
+<p>Happy Paper Trading!</p>
+
+- The PaperTrading Team
+
+

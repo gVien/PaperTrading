@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token
+  attr_accessor :remember_token, :activation_token, :reset_token
   # make email to be down case and uniform before saving in database
-  before_save { self.email = email.downcase}
+  before_save :downcase_email
+  before_create :create_activation_digest # generate a digest for the user before a user is created
   has_many :microposts
   has_many :watchlists
   has_many :portfolios
@@ -39,16 +40,79 @@ class User < ActiveRecord::Base
 
   # returns true if the given token (e.g. remember_token) matches the digest
   # this is similar to authenticate method from BCrypt, which compares password and password_digest
-  def authenticated?(remember_token)
-    # remember_token is not the same as the accessor (this is a reference, in case there is a confusion in the future)
+  def authenticated?(digest, token)
+    # send method: lets us call a method with a name of our choice by “sending a message” to a given object
+    # example below gives us an activation_digest from the database:
+    # user = User.first
+    # user.activation_digest => "$2a$10$ZYalH8a6JFgAPwM52uksUeYsExAOLHv/cfPvICoEia6/R9DDrKEEm"
+    # user.send(:activation_digest) or user.send("activation_digest") => "$2a$10$ZYalH8a6JFgAPwM52uksUeYsExAOLHv/cfPvICoEia6/R9DDrKEEm"
 
-    # multiple browsers, prevents an error when a second browser attempts to log out when the other browser already did
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)  # note this is the same as BCrypt::Password.new(remember_digest) == remember_token but it is clearer
+    # Digest is the (Bcrypted hash) digest
+    # use these parameters in symbol: remember_digest, activation_digest, password_digest, etc.
+    digest = send("#{digest}")
+
+    # for remember_digest which is created after the user is created
+    # for multiple browsers with this app opened, prevents an error when a second browser attempts
+    # to log out when the other browser already did
+    return false if digest.nil?
+
+    # this is the same as BCrypt::Password.new(digest) == token but cleaner
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # method to forget a user
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+  # returns true if the activation_email_sent_at time is within the expiration limit
+  # use will be temporily logged in within the expiration limit after sign up
+  def activation_email_sent_at_not_expired?
+    !(self.activation_email_sent_at < 60.minutes.ago)
+  end
+
+  # send activation link via email after sign up and update email sent time
+  def send_activation_email
+    # self is the user object
+    UserMailer.account_activation(self).deliver_now
+    self.update_attribute(:activation_email_sent_at, Time.zone.now)
+  end
+
+  # activates the account
+  def activate_account
+    self.update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  # *** Password Reset ***
+  # create reset digest for password reset
+  def create_reset_digest
+    # similar to create_activation_digest
+    self.reset_token = User.new_token
+    self.reset_digest = User.digest(reset_token)
+  end
+
+  # send user password reset email
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+    self.update_attribute(:reset_sent_at, Time.zone.now)
+  end
+
+  # returns true if password reset link is expired, false otherwise
+  def password_reset_expired?
+    self.reset_sent_at < 60.minutes.ago
+  end
+
+  private
+
+    def downcase_email
+      self.email = email.downcase
+    end
+
+    # this creates the activation token and digest for account activation
+    # a newly signed up user will have activation token and digest assigned to each user object
+    def create_activation_digest
+      # note self refers to the instance of User class while User refers to the class method
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
 end

@@ -9,11 +9,14 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
 
   def index
-    @users = User.paginate(:page => params[:page])
+    @users = User.where(activated: true).paginate(:page => params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    # user cannot view another user's profile unless it's not expired or it's activated
+    # `and` and `&&` are nearly identical but `&&` takes precedence over `and` and binds too tightly to root_url
+    redirect_to root_url and return unless @user.activation_email_sent_at_not_expired? || @user.activated?
   end
 
   def new
@@ -24,7 +27,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      flash[:success] = "You have successfully logged in"
+      @user.send_activation_email
+      flash[:success] = "You have successfully signed up! You are temporarily logged in. An activation email has been sent to your email. Please activate your account to prevent any disruption."
       redirect_to @user
     else
       render "new"
