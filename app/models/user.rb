@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # make email to be down case and uniform before saving in database
   before_save :downcase_email
   before_create :create_activation_digest # generate a digest for the user before a user is created
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :watchlists
   has_many :portfolios
   has_many :trades
