@@ -124,4 +124,24 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_not flash.empty? #29
     assert_redirected_to user   #30
   end
+
+  # test process
+  # 1. get the new password reset form
+  # 2. enter email address (post request)
+  # 3. assign the users from ctrl
+  # 4. update the assigned user attribute and have the password expired
+  # 5. get the edit password/confirmation form for user
+  # 6. verify the link is redirected to the new password reset form
+  # 7 redirect to edit page
+  # 8. verify the body contains "expired"
+  test "should not reset password if reset token is expired" do
+    get new_password_reset_path
+    post password_resets_path, password_reset: { email: @gai.email }
+    user = assigns(:user)
+    user.update_attribute(:reset_sent_at, 5.hours.ago) # password reset sent 5 hours which expires 4 hours
+    get edit_password_reset_path(user.reset_token, email: user.email)
+    assert_redirected_to new_password_reset_path
+    follow_redirect!  # redirect the page to edit_password_reset_path
+    assert_match /(Password reset link has expired)/i, response.body  # phase defined in password_reset controler
+  end
 end
