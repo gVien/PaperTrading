@@ -1,7 +1,7 @@
 <% @ny_times.each do |news| %>
   <div class="news-section">
     <span class="title">
-      <%= link_to news[:title], news[:url], target: "_blank" %>
+      <%= link_to CGI.unescapeHTML(news[:title]), news[:url], target: "_blank" %>
       <div class="byline">
         <span class="src"><%= news[:byline].titleize %></span>
         -
