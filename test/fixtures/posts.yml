@@ -1,0 +1,9 @@
+<% 5.times do |n| %>
+post<%= n %>:
+  content: <%= Faker::Lorem.sentence %>
+  created_at: <%= (5..15).to_a.sample.minutes.ago %>
+<% end %>
+
+newest_post:
+  content: "this is the newest post"
+  created_at: <%= Time.zone.now %>

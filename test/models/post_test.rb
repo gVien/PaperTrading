@@ -24,4 +24,10 @@ class PostTest < ActiveSupport::TestCase
     @post.user_id = nil  # not valid
     assert_not(@post.valid?)
   end
+
+  test "order of posts should be at the most recent first" do
+    # default order of posts is ASC (oldest to newest)
+    # redefine the posts model to reverse the order to DESC => `default_scope -> { order("created_at DESC") }`
+    assert_equal(posts(:newest_post), Post.first)
+  end
 end
