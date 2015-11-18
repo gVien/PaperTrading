@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
     # user cannot view another user's profile unless it's not expired or it's activated
     # `and` and `&&` are nearly identical but `&&` takes precedence over `and` and binds too tightly to root_url
     redirect_to root_url and return unless @user.activation_email_sent_at_not_expired? || @user.activated?
