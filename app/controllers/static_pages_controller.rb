@@ -3,6 +3,7 @@ class StaticPagesController < ApplicationController
     @market_summary = market_summary
     @market_trend = market_trend
     @ny_times = NewYorkTime.get_business_news.first(10)
+    @post = current_user.posts.build if logged_in?
   end
 
   def about
