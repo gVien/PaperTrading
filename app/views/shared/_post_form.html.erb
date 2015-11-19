@@ -1,0 +1,9 @@
+<%= form_for(@post) do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+
+  <div class="field">
+    <%= f.text_area :content, placeholder: "How is your trading?" %>
+  </div>
+
+  <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
