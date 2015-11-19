@@ -21,4 +21,16 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+
+    # before filters
+
+    # check if a user is logged in, otherwise redirect to login url
+    # prevents an unauthorized non-loggedin person from attempting to modify another's user's info
+    def logged_in_user
+      unless logged_in? #if user is not logged in
+        store_location  #friendly forwarding
+        flash[:danger] = "The action you requested is not valid. You may want to login."
+        redirect_to login_url
+      end
+    end
 end
