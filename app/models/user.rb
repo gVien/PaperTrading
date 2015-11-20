@@ -102,6 +102,12 @@ class User < ActiveRecord::Base
     self.reset_sent_at < 60.minutes.ago
   end
 
+  # returns all the feed for the current user
+  def feed
+    # http://guides.rubyonrails.org/active_record_querying.html #section 2.2 has more info about array conditions
+    Post.where("user_id = ?", id)  # or simply `posts`
+  end
+
   private
 
     def downcase_email

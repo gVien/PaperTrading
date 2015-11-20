@@ -13,6 +13,7 @@ class PostsController < ApplicationController
       @market_summary = market_summary
       @market_trend = market_trend
       @ny_times = NewYorkTime.get_business_news.first(10)
+      @status_feed = current_user.posts.paginate(page: params[:page])
       render "static_pages/home"
     end
   end

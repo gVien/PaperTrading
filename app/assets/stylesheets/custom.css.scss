@@ -313,3 +313,18 @@ aside {
     margin-top: 5px;
   }
 }
+
+aside {
+  textarea {
+    height: 75px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+/* mobile development */
+/*@media screen and (min-device-width: 320px) and (max-device-width: 650px) {
+  div.feed {
+    display: none;
+  }
+}*/
