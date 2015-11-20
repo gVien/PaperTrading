@@ -8,5 +8,8 @@
   </span>
   <span class="timestamp">
     Posted on <%= time_ago_in_words(post.created_at) %> ago.
+    <% if current_user?(post.user) # checks if current_user is same as user who made the post %>
+      <%= link_to "delete", post,  method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
   </span>
 </li>
