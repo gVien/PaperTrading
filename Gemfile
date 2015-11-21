@@ -55,6 +55,11 @@ gem 'mini_magick',             '3.8.0'
 # fog is image uploader for the cloud (e.g. AWS)
 gem 'fog',                     '1.26.0'
 
+# other gem options include: `gem install rails_autolink` (used to be part of Rails) or
+# `gem rinku` (faster since it's written in C)
+# autodetect url and turns into other resources (image, link, YouTube, Vimeo video,...)
+gem "auto_html"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

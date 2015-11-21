@@ -40,6 +40,9 @@ GEM
     addressable (2.3.8)
     ansi (1.5.0)
     arel (6.0.3)
+    auto_html (1.6.4)
+      redcarpet (~> 3.1)
+      rinku (~> 1.5.0)
     autoprefixer-rails (6.0.3)
       execjs
       json
@@ -262,6 +265,8 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
+    redcarpet (3.3.3)
+    rinku (1.5.1)
     ruby-progressbar (1.7.5)
     sass (3.4.19)
     sass-rails (5.0.4)
@@ -305,6 +310,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  auto_html
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.3.5)
   bootstrap-will_paginate (= 0.0.10)
