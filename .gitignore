@@ -17,3 +17,6 @@
 
 # ignore .idea from RubyMine
 .idea
+
+# Ignore all images stored locally
+/public/uploads

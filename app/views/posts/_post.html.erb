@@ -5,6 +5,10 @@
   </span>
   <span class="content">
     <%= post.content %>
+    <%# the condition prevents an empty image upload if the user chose not to upload
+    an image. The `picture?` method is created from CarrierWave based on the picture column attribute
+     %>
+    <%= image_tag post.picture.url if post.picture? %>
   </span>
   <span class="timestamp">
     Posted on <%= time_ago_in_words(post.created_at) %> ago.

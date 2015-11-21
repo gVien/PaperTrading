@@ -1,4 +1,6 @@
-<%= form_for(@post) do |f| %>
+<%# the `html: { multipart: true } enables file upload
+ `multipart: true` may not be needed for Rails v4+ as uploading/deleting it still works %>
+<%= form_for(@post, html: { multipart: true }) do |f| %>
   <%= render "shared/error_messages", object: f.object %>
 
   <div class="field">
@@ -6,4 +8,7 @@
   </div>
 
   <%= f.submit "Post", class: "btn btn-primary" %>
+  <span class="picture">
+    <%= f.file_field :picture %>
+  </span>
 <% end %>
