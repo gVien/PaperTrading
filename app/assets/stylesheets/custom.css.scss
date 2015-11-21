@@ -300,6 +300,9 @@ aside {
     img {
       display: block;
       padding: 5px 0;
+      /* responsive image scaling to fit screen */
+      width: 100%;
+      height: auto;
     }
   }
   .timestamp {
