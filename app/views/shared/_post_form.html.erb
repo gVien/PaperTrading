@@ -9,6 +9,17 @@
 
   <%= f.submit "Post", class: "btn btn-primary" %>
   <span class="picture">
-    <%= f.file_field :picture %>
+    <%# client side file extension validation %>
+    <%= f.file_field :picture, accept: "image/jpeg, image/jpg, image/png, img/gif"  %>
   </span>
 <% end %>
+
+<%# client side file size validation %>
+<script type="text/javascript">
+  $("#post_picture").bind("change", function() {
+    var sizeInMegabytes = this.files[0].size/1024/1024;
+    if (sizeInMegabytes > 5) {
+      alert("Image size must be 5MB or less.")
+    }
+  });
+</script>
