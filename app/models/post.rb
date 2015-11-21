@@ -9,6 +9,19 @@ class Post < ActiveRecord::Base
   validates :user_id, presence: true
   validate :cap_picture_size, :allow_blank_content_if_picture_exists
 
+  # parse url in content into links
+  auto_html_for :content do
+    html_escape
+    image
+    # For YouTube, default width is 420, height 315 if not specified
+    # not setting will not affect the responsive of the video, since CSS will take care of it
+    youtube(:width => 560, :height => 349, :autoplay => false)
+    vimeo(:show_title => true, :allow_fullscreen => true) # see config/initializers/auto_html.rb for custom filter
+    twitter
+    link :target => "_blank", :rel => "nofollow"
+    simple_format
+  end
+
   private
     # server side validation for picture size (need client side too)
     def cap_picture_size
