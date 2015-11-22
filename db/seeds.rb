@@ -8,8 +8,8 @@
 
 User.create!({ first_name: "Gai",
                last_name: "V",
-               email: "gai@gai.com",
-               password: "123456",
+               email: ENV["GAI_EMAIL"],
+               password: "123456",  # will change in production
                password_confirmation: "123456",
                admin: true,
                activated: true,
