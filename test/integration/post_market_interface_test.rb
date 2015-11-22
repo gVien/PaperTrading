@@ -101,4 +101,46 @@ class PostMarketInterfaceTest < ActionDispatch::IntegrationTest
     get user_path(@second_user)  #26
     assert_select "a", text: "delete", count: 0 # 27
   end
+
+  # post a link, should be selectable with `a` tag
+  # post a Youtube video, should be selectable w/ appripriate tag (.youtube iframe)
+  # post a Vimeo video, should be selectable w/ appripriate tag (.vimeo iframe)
+  # post a Twitter post, should be selectable w/ appripriate tag (iframe)
+  test "conversion of urls into resources (link, youtube, vimeo, twitter, etc)" do
+    log_in_as(@user)
+    get(root_path)
+
+    # links
+    assert_difference "Post.count", 1 do
+      post(posts_path, post: { content: "http://www.google.com" })
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_match "#{@user.posts.first.content}", response.body
+    assert_select "a[href=?]", @user.posts.first.content
+
+    # Youtube Videos
+    assert_difference "Post.count", 1 do
+      post(posts_path, post: { content: 'https://www.youtube.com/watch?v=e1210RZl8i4&list=PL6485CF3A4C7EB225' })
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select ".youtube iframe"
+
+    # Vimeo Videos
+    assert_difference "Post.count", 1 do
+      post(posts_path, post: { content: 'https://vimeo.com/74008847' })
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select ".vimeo iframe"
+
+    # Twitter Shared Links
+    assert_difference "Post.count", 1 do
+      post(posts_path, post: { content: 'https://twitter.com/google/status/651460310037999616' })
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_select '.twitter-tweet'  # twitter wraps the resources inside the iframe
+  end
 end
