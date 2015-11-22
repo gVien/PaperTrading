@@ -5,6 +5,13 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  # login user, optional remember me, and redirect user
+  def login_and_redirect_with_remember(user)
+    log_in(@user)
+    params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
+    redirect_back_to_or @user
+  end
+
   # method to remember a user in persistence session
   def remember(user)
     user.remember
