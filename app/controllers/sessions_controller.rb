@@ -6,14 +6,10 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email].downcase)  #session from new.html.erb
 
     if @user && @user.authenticate(params[:session][:password])
-      if @user.activated?
-        log_in(@user)
-        params[:session][:remember_me] == "1" ? remember(@user) : forget(@user) # checked box has value of "1", unchecked is "0"
-        redirect_back_to_or @user
-      elsif @user.activation_email_sent_at_not_expired?
-        log_in(@user)
-        params[:session][:remember_me] == "1" ? remember(@user) : forget(@user)
-        redirect_back_to_or @user
+      if @user.activated? # if account is activated, login
+        login_and_redirect_with_remember(@user)
+      elsif @user.activation_email_sent_at_not_expired? # elsif expiration time needed is valid, login
+        login_and_redirect_with_remember(@user)
       else
         flash[:warning] = "Account not activated. Check your email for the activation link."
         redirect_to root_url

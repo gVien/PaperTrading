@@ -48,6 +48,18 @@ gem "faker", "1.4.3"
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 
+# carrierwave is image uploader for Ruby apps
+gem 'carrierwave'
+# mini-magick is image resizing (it's a wrapper for imagemagick gem)
+gem 'mini_magick',             '3.8.0'
+# fog is image uploader for the cloud (e.g. AWS)
+gem 'fog',                     '1.26.0'
+
+# other gem options include: `gem install rails_autolink` (used to be part of Rails) or
+# `gem rinku` (faster since it's written in C)
+# autodetect url and turns into other resources (image, link, YouTube, Vimeo video,...)
+gem "auto_html"
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

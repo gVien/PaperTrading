@@ -96,4 +96,12 @@ class UserTest < ActiveSupport::TestCase
   test "authenticated? should return false if remember_token is nil" do
     assert_not(@user.authenticated?(:remember_digest, "")) #expect authenticated?(:remember_digest, "") to return false to pass
   end
+
+  test "all posts made by a user should be destroyed when a user is deleted" do
+    @user.save
+    @user.posts.create(content: "this will get deleted if a user is deleted")
+    assert_difference "Post.count", -1 do
+      @user.destroy
+    end
+  end
 end

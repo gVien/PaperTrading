@@ -11,20 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116172647) do
+ActiveRecord::Schema.define(version: 20151121204122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "microposts", force: :cascade do |t|
-    t.text     "content"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at", using: :btree
-  add_index "microposts", ["user_id"], name: "index_microposts_on_user_id", using: :btree
 
   create_table "portfolios", force: :cascade do |t|
     t.string   "symbol"
@@ -38,6 +28,18 @@ ActiveRecord::Schema.define(version: 20151116172647) do
 
   add_index "portfolios", ["symbol"], name: "index_portfolios_on_symbol", unique: true, using: :btree
   add_index "portfolios", ["user_id"], name: "index_portfolios_on_user_id", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "picture"
+    t.text     "content_html"
+  end
+
+  add_index "posts", ["user_id", "created_at"], name: "index_posts_on_user_id_and_created_at", using: :btree
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
   create_table "stocks", force: :cascade do |t|
     t.string   "symbol"
@@ -91,8 +93,8 @@ ActiveRecord::Schema.define(version: 20151116172647) do
   add_index "watchlists", ["name"], name: "index_watchlists_on_name", using: :btree
   add_index "watchlists", ["user_id"], name: "index_watchlists_on_user_id", using: :btree
 
-  add_foreign_key "microposts", "users"
   add_foreign_key "portfolios", "users"
+  add_foreign_key "posts", "users"
   add_foreign_key "stocks", "watchlists"
   add_foreign_key "trades", "users"
   add_foreign_key "watchlists", "users"

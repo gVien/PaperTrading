@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # make email to be down case and uniform before saving in database
   before_save :downcase_email
   before_create :create_activation_digest # generate a digest for the user before a user is created
-  has_many :microposts
+  has_many :posts, dependent: :destroy
   has_many :watchlists
   has_many :portfolios
   has_many :trades
@@ -100,6 +100,12 @@ class User < ActiveRecord::Base
   # returns true if password reset link is expired, false otherwise
   def password_reset_expired?
     self.reset_sent_at < 60.minutes.ago
+  end
+
+  # returns all the feed for the current user
+  def feed
+    # http://guides.rubyonrails.org/active_record_querying.html #section 2.2 has more info about array conditions
+    Post.where("user_id = ?", id)  # or simply `posts`
   end
 
   private

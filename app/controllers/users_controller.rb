@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
     # user cannot view another user's profile unless it's not expired or it's activated
     # `and` and `&&` are nearly identical but `&&` takes precedence over `and` and binds too tightly to root_url
     redirect_to root_url and return unless @user.activation_email_sent_at_not_expired? || @user.activated?
@@ -62,16 +63,6 @@ class UsersController < ApplicationController
     end
 
     # before filter (#before_action)
-
-    # check if a user is logged in, otherwise redirect to login url
-    # prevents an unauthorized non-loggedin person from attempting to modify another's user's info
-    def logged_in_user
-      unless logged_in? #if user is not logged in
-        store_location  #friendly forwarding
-        flash[:danger] = "The action you requested is not valid. You may want to login."
-        redirect_to login_url
-      end
-    end
 
     # check if the user is the correct user
     # prevents one logged in user from modifying another's logged in user's info

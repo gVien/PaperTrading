@@ -1,0 +1,21 @@
+<li id="post-<%= post.id %>">
+  <%= gravatar_for(post.user, size: 50) %>
+  <span class="user">
+    <%= link_to full_name(post.user), post.user %>
+  </span>
+  <span class="content">
+    <%#= without adding migration use: auto_html(post.content) { simple_format; link(:target => 'blank') } %>
+    <%# post.content is needed in case content_html is empty %>
+    <%= post.content_html || post.content %>
+    <%# the condition prevents an empty image upload if the user chose not to upload
+    an image. The `picture?` method is created from CarrierWave based on the picture column attribute
+     %>
+    <%= image_tag post.picture.url if post.picture? %>
+  </span>
+  <span class="timestamp">
+    Posted on <%= time_ago_in_words(post.created_at) %> ago.
+    <% if current_user?(post.user) # checks if current_user is same as user who made the post %>
+      <%= link_to "delete", post,  method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </span>
+</li>
