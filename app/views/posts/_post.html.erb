@@ -4,9 +4,7 @@
     <%= link_to full_name(post.user), post.user %>
   </span>
   <span class="content">
-    <%#= without adding migration use: auto_html(post.content) { simple_format; link(:target => 'blank') } %>
-    <%# post.content is needed in case content_html is empty %>
-    <%= raw(post.content_html) || post.content %>
+    <%= post_content_of(post) %>
     <%# the condition prevents an empty image upload if the user chose not to upload
     an image. The `picture?` method is created from CarrierWave based on the picture column attribute
      %>

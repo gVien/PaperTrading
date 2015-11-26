@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include StaticPagesHelper
   include SessionsHelper
   include UsersHelper
+  include PostsHelper
 
   before_action :activate_account_required
 
