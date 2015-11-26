@@ -5,4 +5,8 @@
     <%= render @status_feed %>
     <%= will_paginate @status_feed %>
   </ol>
+<% else %>
+  <ol class="posts-empty">
+    <p>Looks like your status feed has no posts. Post something or follow someone to keep track of that person's trades!</p>
+  </ol>
 <% end %>
