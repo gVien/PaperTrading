@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
   has_many :portfolios
   has_many :trades
 
+  # relationship
+  # if user A is following user B but not vice versa, user A has an active relationship
+  # with user B and user B has a passive relationship with user A
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 50 }
