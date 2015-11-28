@@ -16,7 +16,11 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function() {
+// $(document).ready(function() { ... }); will cause problem with Turbolinks. The first page
+// load will not run the codes until a refresh. If this is used, it is recommended to
+// use this gem https://github.com/kossnocorp/jquery.turbolinks this problem.
+// Or if not, use $(document).on("page:change", function() {...})
+$(document).on("page:change", function() {
 
   var textField = $("#post_content"),
       btnPost   = $("#btn-post"),
