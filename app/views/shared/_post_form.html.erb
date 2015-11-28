@@ -7,7 +7,7 @@
     <%= f.text_area :content, placeholder: "How is your trading?" %>
   </div>
 
-  <%= f.submit "Post", class: "btn btn-primary" %>
+  <%= f.submit "Post", class: "btn btn-primary", id: "btn-post", disabled: true, data: { disable_with: "Working..." } %>
   <span class="picture">
     <%# client side file extension validation %>
     <%= f.file_field :picture, accept: "image/jpeg, image/jpg, image/png, img/gif"  %>
@@ -17,9 +17,12 @@
 <%# client side file size validation %>
 <script type="text/javascript">
   $("#post_picture").bind("change", function() {
-    var sizeInMegabytes = this.files[0].size/1024/1024;
-    if (sizeInMegabytes > 5) {
-      alert("Image size must be 5MB or less.")
+    var file = this.files[0];
+    if (file) { // this prevents conflict with disabled post btn validation
+      var sizeInMegabytes = this.files[0].size/1024/1024;
+      if (sizeInMegabytes > 5) {
+        alert("Image size must be 5MB or less.")
+      }
     }
   });
 </script>

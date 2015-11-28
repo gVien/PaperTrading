@@ -9,12 +9,19 @@
     </section>
   </aside>
   <div class="col-md-6">
+    <% if logged_in? %>
+      <section class="post_form profile_form">
+        <%= render "shared/post_form" %>
+      </section>
+    <% end %>
     <% if @user.posts.any? %>
       <h3>Posts (<%= @user.posts.count %>)</h3>
       <ol class="posts">
         <%= render @posts %>
       </ol>
       <%= will_paginate @posts %>
+      <% else %>
+        <p class="posts-empty">Looks like your status feed has no posts. Update your status to let others know of your trading activity!</p>
     <% end %>
   </div>
 </div>

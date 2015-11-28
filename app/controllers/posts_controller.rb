@@ -7,7 +7,14 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     if @post.save
       flash[:success] = "Your status has been successfully created!"
-      redirect_to root_url
+      # redirect to the same page that the user uses to post (profile or landing)
+      # there is a minor bug if the user clicks "post" (although button is disabled) again on the rendered page w/
+      # form error. This will be fixed once I find a better solution to fix the `elsif` clause below.
+      redirect_to request.referrer || root_url
+    # elsif request.referrer.include?(current_user.id.to_s)
+    #   @user = current_user
+    #   @posts = @user.posts.paginate(page: params[:page])
+    #   render "users/show"
     else
       # this belongs to `static_pages/home` but Rails thinks it should be in `posts/`, will refactor
       @market_summary = market_summary

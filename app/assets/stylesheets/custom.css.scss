@@ -283,7 +283,7 @@ aside {
 
 /* Posts */
 
-.posts {
+.posts, .posts-empty {
   list-style: none;
   padding: 0;
   li {
@@ -337,12 +337,16 @@ aside {
   }
 }
 
-aside {
+aside, .profile_form {
   textarea {
     height: 75px;
     margin-top: 5px;
     margin-bottom: 5px;
   }
+}
+
+.profile_form {
+  margin-top: 20px;
 }
 
 span.picture {
@@ -352,6 +356,10 @@ span.picture {
   }
 }
 
+
+/*.posts-empty {
+
+}*/
 /* mobile development */
 /*@media screen and (min-device-width: 320px) and (max-device-width: 650px) {
   div.feed {

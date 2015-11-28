@@ -15,3 +15,35 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+
+// $(document).ready(function() { ... }); will cause problem with Turbolinks. The first page
+// load will not run the codes until a refresh. If this is used, it is recommended to
+// use this gem https://github.com/kossnocorp/jquery.turbolinks this problem.
+// Or if not, use $(document).on("page:change", function() {...})
+$(document).on("page:change", function() {
+
+  var textField = $("#post_content"),
+      btnPost   = $("#btn-post"),
+      postPix   = $("#post_picture");
+
+  // client-side disable of post btn if
+  // 1. text field is empty WITHOUT picture upload
+  // 2. text field is blank (e.g. "  ") WITHOUT picture upload
+
+  textField.keyup(function() {
+    if(!$.trim($(this).val()) && !postPix.val()) {  // if not empty/blank && file not blank
+       btnPost.attr("disabled", true); // or .prop
+    } else if ($.trim($(this).val())) {
+       btnPost.attr("disabled", false);
+    }
+  });
+
+  // enable post btn if a picture upload exists
+  postPix.change(function() {
+    if ($(this).val()) {
+      btnPost.attr("disabled", false);
+    } else if ($(this).val() === "") {
+      btnPost.attr("disabled", true);
+    }
+  });
+ });
