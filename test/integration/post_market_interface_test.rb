@@ -10,6 +10,7 @@ class PostMarketInterfaceTest < ActionDispatch::IntegrationTest
   # 1. login as user
   # 2. get home page
   # 3. verify there is pagination
+  # 3.1 verify the post button is disabled when the form or file upload is not present
 
   # Part 1: user post an empty content without picture upload present
   # 4. user posts an invalid post
@@ -47,6 +48,10 @@ class PostMarketInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)  #1
     get(root_path)  #2
     assert_select("div.pagination")  #3
+
+    # this is a light test to verify the `post` button is disabled
+    # for a more interactive test, Capybara needs to be integrated with Minitest
+    assert_select("form input[type=submit][disabled=disabled]") #3.1
 
     # Part 1: user post an empty post without picture upload present
     assert_no_difference "Post.count" do  #4, 5
