@@ -10,12 +10,12 @@ class RelationshipTest < ActiveSupport::TestCase
   end
 
   test "should have followed_id" do
-    @relationshp.followed_id = ""
-    assert_not @relationshp.valid?  #pass if valid? returns false
+    @relationship.followed_id = ""
+    assert_not @relationship.valid?  #pass if valid? returns false
   end
 
   test "should have follower_id" do
-    @relationshp.follower_id = ""
-    assert_not @relationshp.valid?  #pass if valid? returns false
+    @relationship.follower_id = ""
+    assert_not @relationship.valid?  #pass if valid? returns false
   end
 end
