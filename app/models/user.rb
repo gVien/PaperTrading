@@ -11,7 +11,10 @@ class User < ActiveRecord::Base
   # relationship
   # if user A is following user B but not vice versa, user A has an active relationship
   # with user B and user B has a passive relationship with user A
-  has_many :active_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  # this is the same as `has_many :followeds, through: :active_relationships`
+  # but since it's weird to call `user.followed` to get a list of users who the user is following
+  has_many :following, through: :active_relationships, source: :followed
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
@@ -111,6 +114,23 @@ class User < ActiveRecord::Base
   def feed
     # http://guides.rubyonrails.org/active_record_querying.html #section 2.2 has more info about array conditions
     Post.where("user_id = ?", id)  # or simply `posts`
+  end
+
+  # follows the another_user, e.g. user.follow(another_user) => user follows another_user
+  def follow(another_user)
+    # Relationship.new(follower_id: self.id, followed_id: user.id)
+    # `active_relationships` is another name for `Relationship` model for active relationship (as described above)
+    active_relationships.create(followed_id: another_user.id) #follower_id is automatically set, e.g. user.id, and another_user.id is followed_id
+  end
+
+  # unfollow the another_user, e.g. user.unfollow(another_user) => user unfollows another_user
+  def unfollow(another_user)
+    active_relationships.find_by(followed_id: another_user.id).destroy if active_relationships.find_by(followed_id: another_user.id)
+  end
+
+  # returns true if the user is following another_user => user.following?(another_user)
+  def following?(another_user)
+    self.following.include?(another_user)
   end
 
   private
