@@ -9,13 +9,14 @@
 User.create!({ first_name: "Gai",
                last_name: "V",
                email: ENV["GAI_EMAIL"],
-               password: "123456",  # will change in production
-               password_confirmation: "123456",
+               password: ENV["PASSWORD"],
+               password_confirmation: ENV["PASSWORD"],
                admin: true,
                activated: true,
                activated_at: Time.zone.now,
                activation_email_sent_at: 1.hour.ago })
 
+# for testing/development
 99.times do |n|
   first_name = Faker::Name.first_name
   last_name = Faker::Name.last_name
@@ -36,3 +37,11 @@ users = User.order(:created_at).take(10)
   content = Faker::Lorem.sentence(10)
   users.each { |user| user.posts.create!(content: content) }
 end
+
+# followers/following
+user = User.first
+users = User.all
+followers = users[2..60]
+following = users[2..80]
+followers.each { |follower| follower.follow(user) }
+following.each { |followed| user.follow(followed) }
