@@ -25,6 +25,7 @@ class RelationshipTest < ActiveSupport::TestCase
     assert_not gai.following?(second_user) # initially, verify gai is not following second user
     gai.follow(second_user)  #now gai follows second_user
     assert gai.following?(second_user)  # verify gai is following second user
+    assert second_user.followers.include?(gai) # verify that the followers database for second_user includes gai
     gai.unfollow(second_user)  #gai unfollow second_user
     assert_not gai.following?(second_user) #verify gai is not following second user
   end
