@@ -1,0 +1,22 @@
+<% provide(:title, "#{full_name(@user)} | #{@title}") %>
+  <aside class="col-md-6">
+  <!-- user info -->
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user, size: 50 %>
+        <%= full_name(@user) %>
+      </h1>
+      <%= render "shared/user_stats" %>
+    </section>
+  </aside>
+  <!-- following/followers -->
+  <div class="col-md-6">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+      <ul class="users follow">
+        <%= render @users %>
+      </ul>
+      <%= will_paginate %>
+    <% end %>
+  </div>
+</div>
