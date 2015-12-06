@@ -79,4 +79,14 @@ class UsersControllerTest < ActionController::TestCase
     patch :update, id: @new_user, user: { admin: true }
     assert_not(@new_user.reload.admin?) # should be false again to pass
   end
+
+  test "should redirect follower if user is not logged in" do
+    get :followers, id: @gai
+    assert_redirected_to login_url
+  end
+
+  test "should redirect following if user is not logged in" do
+    get :following, id: @gai
+    assert_redirected_to login_url
+  end
 end
