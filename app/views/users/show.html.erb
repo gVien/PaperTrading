@@ -11,7 +11,7 @@
     </section>
   </aside>
   <div class="col-md-6">
-    <% if logged_in? %>
+    <% if logged_in? && current_user?(@user) %>
       <section class="post_form profile_form">
         <%= render "shared/post_form" %>
       </section>
@@ -23,7 +23,7 @@
       </ol>
       <%= will_paginate @posts %>
       <% else %>
-        <p class="posts-empty">Looks like your status feed has no posts. Update your status to let others know of your trading activity!</p>
+        <p class="posts-empty">Nothing has been posted yet!</p>
     <% end %>
   </div>
 </div>
