@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
-    @market_summary = market_summary
-    @market_trend = market_trend
+    # @market_summary = market_summary
+    # @market_trend = market_trend
     @ny_times = NewYorkTime.get_business_news.first(10)
     if logged_in?
       @post = current_user.posts.build  # for form
