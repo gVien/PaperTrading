@@ -1,0 +1,23 @@
+follow1:
+  follower: gai
+  followed: second_user
+
+follow2:
+  follower: second_user
+  followed: third_user
+
+follow3:
+  follower: third_user
+  followed: gai
+
+follow4:
+  follower: gai
+  followed: user1
+
+follow5:
+  follower: user2
+  followed: gai
+
+follow6:
+  follower: second_user
+  followed: user2
