@@ -22,5 +22,11 @@ module PaperTrading
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # When a browser (e.g Firefox) has JS disabled (e.g. Firefox's add-on NoScript won't allow JS),
+    # clicking the "follow" button raises an `InvalidAuthenticityToken`
+    # this config includes the authenticity token in remote forms when JS is disabled
+    # this config enables the html version in respond_to method to work (e.g. when JS is disabled by the browser)
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end

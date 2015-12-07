@@ -1,0 +1,12 @@
+// AJAX call (Rails way) for create with Ruby in Relationships_Controller
+// note `remote: true` (add `data-remote="true"` to form) must be added to the follow/unfollow form to make Ajax works (tells Rails to let JS handle the form)!
+
+// escape Javascript is used to escape out the result when inserting HTML in JS file
+// it ensures the code will not break when combining with Ruby
+// see second answer at http://stackoverflow.com/questions/1620113/why-escape-javascript-before-rendering-a-partial
+
+// update the button from "unfollow" to "follow"
+$("#follow_form").html("<%= escape_javascript(render('users/unfollow')) %>");
+
+// update the count of followers stat
+$("#followers").html("<%= @user.followers.count %>");

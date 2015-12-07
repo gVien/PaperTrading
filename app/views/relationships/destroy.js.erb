@@ -1,0 +1,5 @@
+// update the unfollow button from "unfollow" to "follow"
+$("#follow_form").html("<%= escape_javascript(render('users/follow')) %>");
+
+// update the count of followers stat
+$("#followers").html("<%= @user.followers.count %>")
