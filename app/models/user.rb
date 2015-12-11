@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
     # http://guides.rubyonrails.org/active_record_querying.html #section 2.2 has more info about array conditions
     # User.first.following_ids.join(",") => "3,4,5,9" etc.
     # same as User.first.following.map(&:id)
-    Post.where("user_id IN (?) OR user_id = ?", following_ids, id)
+    Post.where("user_id IN (:following_ids) OR user_id = :user_id", following_ids: following_ids, user_id: id)
   end
 
   # follows the another_user, e.g. user.follow(another_user) => user follows another_user
