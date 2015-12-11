@@ -104,4 +104,27 @@ class UserTest < ActiveSupport::TestCase
       @user.destroy
     end
   end
+
+  # test for status feed implementation
+  test "should have the right posts including posts from self and followed users" do
+    # see relationship fixture
+    gai = users(:gai) # follows second_user, followed by third_user
+    second_user = users(:second_user) #follows user2, followed by gai
+    user2 = users(:user2) #follows gai, followed by second_user
+
+    # gai should see all of new users posts (followed user)
+    second_user.posts.each do |post_of_second_user|
+      assert gai.feed.include?(post_of_second_user), "must see the following user's posts"
+    end
+
+    # gai should not see any of second_user's post (unfollowed user)
+    user2.posts.each do |user2_post|
+      assert_not gai.feed.include?(user2_post)
+    end
+
+    # gai should see his posts
+    gai.posts.each do |my_post|
+      assert gai.feed.include?(my_post)
+    end
+  end
 end
