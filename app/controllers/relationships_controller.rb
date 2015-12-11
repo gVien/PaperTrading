@@ -6,10 +6,8 @@ class RelationshipsController < ApplicationController
     @user = User.find(params[:followed_id])
     current_user.follow(@user)
     respond_to do |format|
-      p format.html { redirect_to user_path(@user) } # or simply `redirected_to user`
-      p "*" * 50
-      p format.js
-      p "-" * 50
+      format.html { redirect_to user_path(@user) } # or simply `redirected_to user`
+      format.js
       format.js #ajx
     end
   end

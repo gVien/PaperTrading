@@ -16,7 +16,7 @@
 <div class="col-md-6 col-md-pull-6 market">
   <div class="summary-data">
     <h3 class="summary">Market Summary</h3>
-    <%# render "static_pages/market_summary"%>
+    <%= render "static_pages/market_summary"%>
   </div>
   <div class="market-news">
     <h3 class="market-news-header">Market and Business News</h3>
@@ -24,7 +24,7 @@
   </div>
 
   <h3 class="trend">Market Trend</h3>
-  <%# @market_trend.each do |header, data_arr| %>
-    <%# render "static_pages/market_trend", { header: header, data_arr: data_arr } %>
-  <%#end #end outer each%>
+  <% @market_trend.each do |header, data_arr| %>
+    <%= render "static_pages/market_trend", { header: header, data_arr: data_arr } %>
+  <% end #end outer each%>
 </div>
