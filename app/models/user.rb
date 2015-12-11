@@ -117,7 +117,9 @@ class User < ActiveRecord::Base
   # returns all the feed for the current user
   def feed
     # http://guides.rubyonrails.org/active_record_querying.html #section 2.2 has more info about array conditions
-    Post.where("user_id = ?", id)  # or simply `posts`
+    # User.first.following_ids.join(",") => "3,4,5,9" etc.
+    # same as User.first.following.map(&:id)
+    Post.where("user_id IN (?) OR user_id = ?", following_ids, id)
   end
 
   # follows the another_user, e.g. user.follow(another_user) => user follows another_user

@@ -1,9 +1,9 @@
 <% if @status_feed.any? %>
   <ol class="posts">
-    <%= will_paginate @status_feed %>
+    <%= will_paginate @status_feed, inner_window: 1, outer_window: 1 %>
     <%# Black magic: Rails will look for post partial (_post.html.erb) since each item in @status_feed has class of Post %>
     <%= render @status_feed %>
-    <%= will_paginate @status_feed %>
+    <%= will_paginate @status_feed, inner_window: 1, outer_window: 1 %>
   </ol>
 <% else %>
   <ol class="posts-empty">
