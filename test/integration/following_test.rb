@@ -64,4 +64,12 @@ class FollowingTest < ActionDispatch::IntegrationTest
       xhr(:delete, relationship_path(relationship))
     end
   end
+
+  test "home should have status feed for current user and following users" do
+    get(root_path)
+    @user.feed.paginate(page: 1).each do |post|
+      # <%# CGI.unescapeHTML to decode and CGI.escapeHTML to encode (e.g. ' => &#8217;) %>
+      assert_match CGI.escapeHTML(post.content), response.body
+    end
+  end
 end
