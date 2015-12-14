@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151213081613) do
+ActiveRecord::Schema.define(version: 20151214071605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,13 +55,11 @@ ActiveRecord::Schema.define(version: 20151213081613) do
   create_table "stocks", force: :cascade do |t|
     t.string   "symbol"
     t.string   "company_name"
-    t.integer  "watchlist_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
   add_index "stocks", ["symbol"], name: "index_stocks_on_symbol", using: :btree
-  add_index "stocks", ["watchlist_id"], name: "index_stocks_on_watchlist_id", using: :btree
 
   create_table "trades", force: :cascade do |t|
     t.string   "symbol_traded"
@@ -116,7 +114,6 @@ ActiveRecord::Schema.define(version: 20151213081613) do
 
   add_foreign_key "portfolios", "users"
   add_foreign_key "posts", "users"
-  add_foreign_key "stocks", "watchlists"
   add_foreign_key "trades", "users"
   add_foreign_key "watchlists", "users"
   add_foreign_key "watchlists_stocks", "stocks"
