@@ -5,7 +5,6 @@ class Stock < ActiveRecord::Base
 
   validates :symbol, presence: true
   validates :company_name, presence: true
-  validates :watchlist_id, presence: true
 
   private
     def upcase_symbol
