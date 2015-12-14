@@ -1,5 +1,6 @@
 class Stock < ActiveRecord::Base
-  belongs_to :watchlist
+  has_many :watchlists_stocks
+  has_many :watchlists, through: :watchlists_stocks
   before_save :upcase_symbol
 
   validates :symbol, presence: true
