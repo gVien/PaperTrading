@@ -16,7 +16,5 @@ class TradeKingTest < ActiveSupport::TestCase
     assert(topgainers.length > 0) # expect results to have length of more than 0
     top_pct_gainers = TradeKing.get_top_pct_gainers
     assert(top_pct_gainers.length > 0) # expect results to have length of more than 0
-    top_active = TradeKing.get_top_active_gainers_by_dollar_value
-    assert(top_active.length > 0) # expect results to have length of more than 0
   end
 end
