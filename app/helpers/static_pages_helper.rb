@@ -1,7 +1,7 @@
 module StaticPagesHelper
   # quote summary of the market
   def market_summary
-    TradeKing.get_quote("DJI,SPX,COMP").reverse
+    TradeKing.get_quote("DJI,SPX,COMP")
   end
 
   def market_trend
