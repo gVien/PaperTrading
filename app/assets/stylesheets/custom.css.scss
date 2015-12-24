@@ -390,7 +390,22 @@ span.picture {
   margin-bottom: 10px;
 }
 
-/*.posts-empty {
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .search-query {
+    .navbar-search {
+      .search-input {
+        width: 225px;
+      }
+    }
+  }
+ }
+
+/*.nav > li.search-query {
+  display: none;
+}
+
+*//*.posts-empty {
 
 }*/
 /* mobile development */
@@ -399,3 +414,4 @@ span.picture {
     display: none;
   }
 }*/
+
