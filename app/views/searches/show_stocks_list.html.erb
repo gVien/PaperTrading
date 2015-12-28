@@ -1,0 +1,3 @@
+<% @stock.each do |s| %>
+<li><%= link_to s.symbol, search_path(symbol: s.symbol) %></li>
+<% end %>
