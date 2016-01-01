@@ -7,7 +7,7 @@ class SearchesController < ApplicationController
       render "show_stocks_list"
     else
       if @stock
-        render @searches
+        redirect_to @stock
       else
         render "show_stock_not_found"
       end
