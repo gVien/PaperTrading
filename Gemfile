@@ -60,6 +60,10 @@ gem 'fog',                     '1.26.0'
 # autodetect url and turns into other resources (image, link, YouTube, Vimeo video,...)
 gem "auto_html"
 
+# friendly_id to convert id to stock symbol (or username)
+# e.g. /stocks/1 => stocks/ABC
+gem 'friendly_id', '~> 5.1.0'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -77,6 +81,9 @@ group :development, :test do
 
   # dot env for storing ENV variables (e.g. consumer key, access token, etc)
   gem 'dotenv-rails'
+
+  # better errors in front end to help with debugging
+  gem "better_errors"
 end
 
 group :test do
