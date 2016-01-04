@@ -21,6 +21,10 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :stocks, only: [:show], path: "symbol"  #add `as: "symbol"` to change path name (e.g. stock_path => symbol_path)
+  get "search" => "searches#show"
+
+  # resources :search, only: [:index, :create, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

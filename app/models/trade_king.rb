@@ -43,12 +43,6 @@ class TradeKing
       format_json(toppctgainers)
     end
 
-    def get_top_active_gainers_by_dollar_value
-      top_by_dollar = get('/v1/market/toplists/topactivegainersbydollarvalue.json')
-      format_json(top_by_dollar)
-    end
-
-
   private
     def oauth
       # Set up an OAuth Consumer

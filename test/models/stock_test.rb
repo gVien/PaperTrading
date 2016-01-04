@@ -3,6 +3,10 @@ require 'test_helper'
 class StockTest < ActiveSupport::TestCase
   def setup
     @watchlist = watchlists(:watchlist1)
+    # note: stock/watchlist => many2many schema
+    # this would create a stock belonging to @watchlist (see @watchlist.watchlists_stocks)
+    # => [watchsStock_id: 1, watchlist_id: @watchlist.id, stock_id: @stock.id]
+    # or conversely @stock.watchlists.build(...)
     @stock = @watchlist.stocks.build(symbol: "TSLA", company_name: "Tesla Motor")
   end
 
@@ -29,12 +33,5 @@ class StockTest < ActiveSupport::TestCase
     new_stock = @watchlist.stocks.build(symbol: "goog", company_name: "Alphabet Inc.")
     new_stock.save
     assert_equal  "GOOG", new_stock.reload.symbol
-  end
-
-  # stock must belong to watchlist id
-  # watchlist id must be present
-  test "watchlist id must be present" do
-    @stock.watchlist_id = nil
-    assert_not @stock.valid?
   end
 end
