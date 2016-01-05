@@ -12,7 +12,7 @@ class Stock < ActiveRecord::Base
     # if symbol exists, display the matched stock
     # elsif blank && lists of stock exists, display lists of stocks partially matching query unless it's empty
     # else return nil
-    if stock = find_by(symbol: query)
+    if stock = find_by(symbol: query.upcase)
       stock
     elsif !query.blank? && list_of_stocks = where('symbol LIKE ?', "%#{query.upcase}%") # query must not be blank!
       list_of_stocks unless list_of_stocks.blank?  #empty array should be filtered
