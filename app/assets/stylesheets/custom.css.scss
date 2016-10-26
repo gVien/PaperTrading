@@ -390,6 +390,42 @@ span.picture {
   margin-bottom: 10px;
 }
 
+/* search results */
+
+.unmatched-results {
+  /*margin-bottom: 20px;*/
+}
+
+#search-content {
+  max-width: 98%;
+  margin: 0 auto;
+  float: none;
+  border: 1px solid #ccc;
+  .search-header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 100px;
+    /*position: relative;*/
+    .search-word {
+/*      position: absolute;
+      top: 0;
+      left: 0;*/
+      font-size: 18px;
+      float: left;
+    }
+    .search-info {
+      h2 {
+      float: right;
+    }
+      .f-right {
+/*        position: absolute;
+        top: 0;
+        right: 0;*/
+        float: right;
+      }
+    }
+  }
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .search-query {
@@ -400,6 +436,9 @@ span.picture {
     }
   }
  }
+
+
+
 
 /*.nav > li.search-query {
   display: none;

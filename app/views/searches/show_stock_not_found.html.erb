@@ -1,1 +1,25 @@
-<li>Stock not found!</li>
+<div class="row">
+  <div class="col-md-12" id="search-content">
+    <div class="search-header">
+      <div class="search-word">
+        <h1>Search</h1>
+      </div>
+      <div class="search-info">
+        <h2>Results for <strong><%= @query %></strong></h2>
+        <h3 class="results-number f-right">234324 results</h3>
+      </div>
+    </div>
+    <div class="results-area">
+      <div class="unmatched-results">
+        <p>Your search for <span class="unmatched-query"><strong><%= @query %></strong></span> did not return any matching stock tickers.</p>
+
+        <p><strong>Suggestions:</strong></p>
+
+        <ul>
+          <li>Make sure tickers are spelled correctly.</li>
+          <li>Try different keywords or check our suggested matches as you type our search term.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
