@@ -1,4 +1,6 @@
 class SearchesController < ApplicationController
+  def show_stock_not_found
+  end
 
   def show
     @query = params[:symbol]
