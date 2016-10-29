@@ -64,6 +64,10 @@ gem "auto_html"
 # e.g. /stocks/1 => stocks/ABC
 gem 'friendly_id', '~> 5.1.0'
 
+# Minitest CI test summary
+gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -96,4 +100,3 @@ group :production do
   gem 'rails_12factor', '0.0.2'
   gem 'puma',           '2.15.3'
 end
-
