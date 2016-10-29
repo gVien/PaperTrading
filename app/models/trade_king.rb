@@ -71,7 +71,12 @@ class TradeKing
     end
 
     def format_json(data)
-      JSON.parse(data, symbolize_names: true)[:response][:quotes][:quote]
+      response = JSON.parse(data, symbolize_names: true)
+      if response[:response][:message] == "An error has occurred while processing your request."
+        response
+      else
+        response[:response][:quotes][:quote]
+      end
     end
   end
 end

@@ -1,5 +1,4 @@
 class NewYorkTime
-
   def self.get_business_news
     response = HTTParty.get("https://api.nytimes.com/svc/topstories/v2/business.json?api-key=#{ENV['NY_KEY']}")
     data_to_json = JSON.parse(response.body, symbolize_names: true)[:results]
