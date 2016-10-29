@@ -64,6 +64,8 @@ gem "auto_html"
 # e.g. /stocks/1 => stocks/ABC
 gem 'friendly_id', '~> 5.1.0'
 
+gem 'devise', '~> 4.2.0'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
