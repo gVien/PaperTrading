@@ -11,6 +11,15 @@ class ActiveSupport::TestCase
   include ApplicationHelper
   include UsersHelper
 
+  # Allow context block in Test
+  def self.context(name, &block)
+    instance_eval(&block)
+  end
+
+  def self.it(name, &block)
+    instance_eval(&block)
+  end
+
   # Add more helper methods to be used by all tests here...
 
   # including the SessionsHelper gives some weird errors. The `logged_in?` does not work when using after `delete logout_path` request
