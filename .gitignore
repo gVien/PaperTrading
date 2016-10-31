@@ -20,3 +20,5 @@
 
 # Ignore all images stored locally
 /public/uploads
+
+/test/reports/*

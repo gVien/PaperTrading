@@ -64,6 +64,10 @@ gem "auto_html"
 # e.g. /stocks/1 => stocks/ABC
 gem 'friendly_id', '~> 5.1.0'
 
+# Minitest CI test summary
+gem 'minitest-ci', :git => 'git@github.com:circleci/minitest-ci.git'
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -71,29 +75,19 @@ gem 'friendly_id', '~> 5.1.0'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
+  gem 'pry-byebug'
   # dot env for storing ENV variables (e.g. consumer key, access token, etc)
   gem 'dotenv-rails'
-
-  # better errors in front end to help with debugging
-  gem "better_errors"
 end
 
 group :test do
   gem 'minitest-reporters', '1.0.5'
   gem 'mini_backtrace',     '0.1.3'
   gem 'guard-minitest',     '2.3.1'
+  gem 'webmock', '~> 2.1.0'
 end
 
 group :production do
   gem 'rails_12factor', '0.0.2'
   gem 'puma',           '2.15.3'
 end
-

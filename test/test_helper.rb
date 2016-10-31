@@ -2,6 +2,7 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require "minitest/reporters"
+require 'webmock/minitest'
 Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
@@ -9,6 +10,15 @@ class ActiveSupport::TestCase
   fixtures :all
   include ApplicationHelper
   include UsersHelper
+
+  # Allow context block in Test
+  def self.context(name, &block)
+    instance_eval(&block)
+  end
+
+  def self.it(name, &block)
+    instance_eval(&block)
+  end
 
   # Add more helper methods to be used by all tests here...
 
